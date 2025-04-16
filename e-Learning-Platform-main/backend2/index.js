@@ -10,6 +10,7 @@ const teacherroute=require('./routes/Teacherroutes');
 const SeePdf=require('./routes/SeePdf');
 const course=require('./routes/course');
 const progress=require('./routes/progress');
+const FetchQuiz=require('./routes/fetchquiz');
 const multer = require("multer");
 const fs = require("fs");
 const pdfParse = require("pdf-parse");
@@ -48,6 +49,7 @@ app.use("/api",course);
 app.use("/api",progress);
 app.use("/api/teacher",teacherroute);
 app.use("/api/teacher",SeePdf);
+app.use("/api",FetchQuiz);
 // app.use("/api/quiz",UploadQuiz);
 // Multer Storage Setup
 const upload = multer({ dest: "upload1/" });

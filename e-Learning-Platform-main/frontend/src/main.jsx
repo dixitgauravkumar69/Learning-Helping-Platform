@@ -33,6 +33,8 @@ import TeacherDashboard from './Pages/Dashboard/TeacherDashboard/TeacherDashboar
 import AddCourse from './Pages/Dashboard/TeacherDashboard/Addcourse';
 import ViewCourses from './Pages/Dashboard/TeacherDashboard/ViewCourses';
 import Generatequiz from './Pages/Dashboard/TeacherDashboard/Generatequiz';
+import Quizez from './Pages/Dashboard/TeacherDashboard/Quizez';
+
 import ViewCourse from './Pages/Dashboard/StudentDashboard/ViewCourse';
 import Quiz from './Pages/Dashboard/StudentDashboard/Quiz';
 import PDFViewer from './Pages/PDFViewer';
@@ -48,6 +50,7 @@ const router = createBrowserRouter(
       <Route path="/Teacher/Dashboard/:ID/AddCourse" element={<AddCourse />} /> 
       <Route path="/Teacher/Dashboard/:ID/ViewCourses" element={<ViewCourses />} /> 
       <Route path="/Teacher/Dashboard/:ID/Generatequiz" element={<Generatequiz />} /> 
+      <Route path="/Teacher/Dashboard/:ID/Quizez" element={<Quizez />} />
       <Route path="/Student/Dashboard/:ID/ViewCourse" element={<ViewCourse />} />
       <Route path="/Student/Dashboard/Quiz" element={<Quiz />} />
       <Route path='/StudentDocument/:Data' element={<StudentDocument/>}/>
