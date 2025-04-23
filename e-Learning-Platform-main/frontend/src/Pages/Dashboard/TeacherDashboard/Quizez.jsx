@@ -3,16 +3,30 @@ import axios from "axios";
 import { FiEye } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
-const CourseList = () => {
+const Quizez = () => {
   const [Quizes, setQuizes] = useState([]);
-  
+
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchQuize();
-   
   }, []);
 
+  const handleUpload = async (quizId) => {
+    try {
+      const res = await axios.post(`/api/uploadQuiz/${quizId}`);
+      
+      console.log("Upload Response:", res.data); 
+      console.log("visibleToStudents:", res.data.visibleToStudents); 
+  
+      alert("Quiz uploaded successfully!");
+    } catch (err) {
+      console.error("Upload Error:", err.response?.data || err.message);
+      alert("Upload failed. Please try again.");
+    }
+  };
+  
+  
   const fetchQuize = async () => {
     try {
       const response = await axios.get("/api/FetchQuiz");
@@ -28,7 +42,9 @@ const CourseList = () => {
         Generated quizes are--
       </h2>
       {Quizes.length === 0 ? (
-        <p className="text-center text-gray-600">No quiz available at the moment.</p>
+        <p className="text-center text-gray-600">
+          No quiz available at the moment.
+        </p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {Quizes.map((Quiz) => (
@@ -40,13 +56,13 @@ const CourseList = () => {
                 <h3 className="text-2xl font-semibold text-gray-800 mb-2">
                   {Quiz.title}
                 </h3>
-                
+
                 <div className="mt-6 flex justify-center">
                   <button
-                    onClick={() => navigate(``)}
+                    onClick={() => handleUpload(Quiz._id)}
                     className="flex items-center bg-blue-600 text-white w-full px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-200"
                   >
-                    <FiEye className="mr-2" /> Upload quiz
+                    <FiEye className="mr-2" /> Upload Quiz
                   </button>
                 </div>
               </div>
@@ -58,4 +74,4 @@ const CourseList = () => {
   );
 };
 
-export default CourseList;
+export default Quizez;

@@ -8,13 +8,19 @@ const API_BASE_URL = "http://localhost:8000"; // Your backend server
 const App = () => {
   const [quiz, setQuiz] = useState(null);
   const [loading, setLoading] = useState(false);
-  
+  const [title, setTitle] = useState(""); // ✅ new state for title
+
   const { getRootProps, getInputProps } = useDropzone({
     accept: ".pdf",
     onDrop: async (acceptedFiles) => {
-      if (acceptedFiles.length === 0) return;
+      if (acceptedFiles.length === 0 || !title.trim()) {
+        alert("Please enter a quiz title before uploading.");
+        return;
+      }
+
       const formData = new FormData();
-      formData.append("pdf", acceptedFiles[0]);
+      formData.append("pdf", acceptedFiles[0]);  // ✅ PDF file
+      formData.append("title", title);           // ✅ Title field
 
       setLoading(true);
       try {
@@ -29,11 +35,18 @@ const App = () => {
     },
   });
 
-  
-
   return (
     <div className="container">
       <h1>PDF to Quiz Generator</h1>
+
+      {/* ✅ Title Input */}
+      <input
+        type="text"
+        placeholder="Enter Quiz Title"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        className="title-input"
+      />
 
       <div {...getRootProps()} className="upload-box">
         <input {...getInputProps()} />
@@ -44,7 +57,8 @@ const App = () => {
 
       {quiz && (
         <div className="quiz-container">
-          <h2>Generated Quiz</h2>
+          <h2>{quiz.title}</h2> {/* ✅ Show quiz title */}
+          <p><strong>Quiz ID:</strong> {quiz.quizId}</p> {/* ✅ Show quiz ID */}
           {quiz.questions.map((q, index) => (
             <div key={index} className="quiz-item">
               <p><strong>{index + 1}. {q.question}</strong></p>
@@ -56,8 +70,6 @@ const App = () => {
               <p className="correct-answer"><strong>Correct Answer:</strong> {q.answer}</p>
             </div>
           ))}
-
-         
         </div>
       )}
     </div>

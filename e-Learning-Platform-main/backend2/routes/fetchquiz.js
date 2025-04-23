@@ -11,4 +11,14 @@ router.get('/Fetchquiz',async(req,res)=>{
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
+
+//Fatch quiz by students..
+router.get("/FetchQuiz", async (req, res) => {
+    try {
+      const visibleQuizzes = await Quiz.find({ visibleToStudents: true });
+      res.json(visibleQuizzes);
+    } catch (err) {
+      res.status(500).json({ message: "Error fetching quizzes" });
+    }
+  });
 module.exports=router;
